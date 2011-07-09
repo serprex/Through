@@ -9,16 +9,16 @@ W=W(fullscreen=1)
 GLF=((GLF*3)(.8,.8,.8),(GLF*3)(.9,.3,.3)),((GLF*3)(1.,1.,not W.maximize()),)*2
 W.event("on_mouse_motion")(lambda x,y,z1,z2,g=globals().__setitem__:(g("Mx",x-Wi>>5),g("My",Hi-y>>5)))
 W.event("on_mouse_press")(lambda*x:globals().__setitem__("Li",-len(Lv)))
-def makeLv(a):
+def makeLv():
 	global Lv,Li,Wi,Hi,Wil,Hil
 	Li=0
-	Lv=[Lv.split("\n") for Lv in open(a).read().rstrip("\n").split("\n\n")]
+	Lv=[Lv.split("\n") for Lv in open(LvL()).read().rstrip("\n").split("\n\n")]
 	Wil=max(max(len(Lv) for Lv in Lv) for Lv in Lv)
 	Hil=max(len(Lv) for Lv in Lv)
 	Lv=[[[b not in " ." for b in a]+[False]*(Wil-len(a)) for a in Lv]+[[True]*Wil]*(Hil-len(Lv)) for Lv in Lv]
 	Wi=W.width-(Wil<<5)>>1
 	Hi=W.height+(Hil+2<<5)>>1
-Ld=not not makeLv(LvL())
+Ld=not not makeLv()
 while 1:
 	glClear(16384)
 	Li=W.flip()
@@ -45,5 +45,4 @@ while 1:
 			W.flip()
 		if Li is not tick() and Li>=0 and (not(0<=My<Hil and 0<=Mx<Wil) or Lv[Li][My][Mx]):break
 	else:break
-	Ld=not not makeLv(LvL()) if Li==len(Lv) else Li-len(Lv)
-W.close()
+	Ld=Li-len(Lv) or not not makeLv()
